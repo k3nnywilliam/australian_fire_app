@@ -5,22 +5,22 @@
     "type": "gitignore",
     "hash": "0",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1679155271115.0,
     "source_on_save": false,
     "relative_order": 4,
     "properties": {
         "source_window_id": "",
         "Source": "Sourcehp5y20jtqcw6",
-        "cursorPosition": "1,0",
+        "cursorPosition": "1,9",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1679156127,
+    "lastKnownWriteTime": 1679156291,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1679156129876,
+    "last_content_update": 1679156291763,
     "read_only": false,
     "read_only_alternatives": []
 }
