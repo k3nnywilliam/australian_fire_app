@@ -1,0 +1,69 @@
+```{r}
+library('readr')
+library('data.table')
+library('dplyr')
+library('rlist')
+library('leaflet')
+library('leaflet.extras')
+
+#list_csv_files <- list.files(path = 'data', full.names=T, pattern="csv")
+#list_csv_files
+
+fire_nrt_V1_96617_df <- readr::read_csv('data/fire_nrt_V1_96617.csv')
+fire_nrt_V1_96617_df <- as.data.table(fire_nrt_V1_96617_df)
+fire_archive_V1_96617_df <- readr::read_csv('data/fire_archive_V1_96617.csv')
+fire_archive_V1_96617_df <- as.data.table(fire_archive_V1_96617_df)
+fire_nrt_M6_96619_df <- readr::read_csv('data/fire_nrt_M6_96619.csv')
+fire_nrt_M6_96619_df<- as.data.table(fire_nrt_M6_96619_df)
+fire_archive_M6_96619_df <- readr::read_csv('data/fire_archive_M6_96619_mod.csv')
+fire_archive_M6_96619_df <- as.data.table(fire_archive_M6_96619_df)
+
+
+str(fire_nrt_V1_96617_df)
+head(fire_nrt_V1_96617_df, 20)
+nrow(fire_nrt_V1_96617_df)
+
+```
+
+```{r}
+
+start_date <- as.Date("2019-10-01")
+end_date <- as.Date("2019-10-31")
+oct_fire_V1_96617 <- fire_nrt_V1_96617_df %>% 
+  dplyr::filter(dplyr::between(acq_date, start_date, end_date))
+
+mm <- leaflet(oct_fire_V1_96617) %>% 
+  setView(lng = 133.281323, lat = -26.4390917,zoom = 3.5) %>% 
+  addProviderTiles(providers$Stamen.Toner,
+                   options = providerTileOptions(minZoom = 3, maxZoom = 12)) %>% 
+  addHeatmap(~longitude, ~latitude, blur = 1, max = 0.5, radius = 2) %>% 
+  addMiniMap(width = 100, height = 100, position = 'topright')
+mm
+```
+
+```{r}
+
+fire_icon <- leaflet::makeIcon(
+  iconUrl = "images/flame.png",
+  iconWidth = 24,
+  iconHeight = 24
+)
+
+start_date <- as.Date("2019-10-01")
+end_date <- as.Date("2019-10-31")
+
+oct_fire_M6_96619 <- fire_nrt_M6_96619_df %>% 
+  dplyr::filter(dplyr::between(acq_date, start_date, end_date))
+
+m2 <- leaflet(oct_fire_M6_96619) %>% 
+  setView(lng = 133.281323, lat = -26.4390917,zoom = 3.5) %>% 
+  addProviderTiles(providers$OpenTopoMap, 
+                   options = providerTileOptions(minZoom = 3, maxZoom = 12)) %>% 
+  addHeatmap(~longitude, ~latitude, blur = 1, max = 0.05, radius = 2) %>% 
+  addMiniMap(width = 100, height = 100, position = 'topright')
+  #addMarkers(~longitude, ~latitude, icon = fire_icon) 
+  #addCircleMarkers(~longitude, ~latitude, color = "red", weight = 1)
+m2
+```
+
+\

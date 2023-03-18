@@ -1,0 +1,32 @@
+{
+    "id": "FF9C096D",
+    "path": "~/Documents/Projects/fires_space_australia/src/markdowns/book_1.Rmd",
+    "project_path": "src/markdowns/book_1.Rmd",
+    "type": "r_markdown",
+    "hash": "1201658840",
+    "contents": "",
+    "dirty": false,
+    "created": 1679140579838.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Sourcehp5y20jtqcw6",
+        "cursorPosition": "32,63",
+        "scrollLine": "0",
+        "rmdVisualMode": "true",
+        "rmdVisualModeLocation": "1045:382",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "docOutlineSize": "110"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1679141912,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1679141912494,
+    "read_only": false,
+    "read_only_alternatives": []
+}
