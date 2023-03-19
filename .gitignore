@@ -2,3 +2,7 @@
 *.Rhistory
 old.Rprofile
 .Rproj.user
+
+*/.Rproj.user/*
+FireAustraliaApp/.Rproj.user/*
+FireAustraliaApp/.Rproj.user/

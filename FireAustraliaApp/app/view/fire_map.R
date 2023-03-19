@@ -11,9 +11,9 @@ box::use(
 
 cat("Loading data...\n", file = stderr())
 fire_nrt_V1_96617_df <- readr::read_csv('app/data/fire_nrt_V1_96617.csv') |> data.table::as.data.table()
-fire_archive_V1_96617_df <- readr::read_csv('app/data/fire_archive_V1_96617.csv') |> data.table::as.data.table()
+#fire_archive_V1_96617_df <- readr::read_csv('app/data/fire_archive_V1_96617.csv') |> data.table::as.data.table()
 fire_nrt_M6_96619_df <- readr::read_csv('app/data/fire_nrt_M6_96619.csv') |> data.table::as.data.table()
-fire_archive_M6_96619_df <- readr::read_csv('app/data/fire_archive_M6_96619_mod.csv') |> data.table::as.data.table()
+#fire_archive_M6_96619_df <- readr::read_csv('app/data/fire_archive_M6_96619_mod.csv') |> data.table::as.data.table()
 selected_data <- reactiveValues(val = fire_nrt_V1_96617_df)
 cat("Loading data done.\n", file = stderr())
 
@@ -76,9 +76,9 @@ server <- function(id) {
         addHeatmap(~longitude, ~latitude, blur = 1, max = 0.5, radius = 3)
     })
 
-    output$table <- reactable$renderReactable(
-      reactable$reactable(selected_data$val[1:100,], minRows = 100, searchable = TRUE)
-    )
+    # output$table <- reactable$renderReactable(
+    #   reactable$reactable(selected_data$val[1:100,], minRows = 100, searchable = TRUE)
+    # )
 
   })
 }
