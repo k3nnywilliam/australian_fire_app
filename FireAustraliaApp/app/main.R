@@ -1,5 +1,5 @@
 box::use(
-  shiny[bootstrapPage, moduleServer, NS, reactiveValues],
+  shiny[bootstrapPage,navbarPage,tabPanel, moduleServer, NS, reactiveValues],
 )
 
 box::use(
