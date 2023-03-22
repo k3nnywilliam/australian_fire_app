@@ -1,6 +1,8 @@
 box::use(
   dplyr, data.table, leaflet, reactable, utils[head, str],
   leaflet.extras[addHeatmap, addFullscreenControl],
+  knitr,
+  shinyWidgets, shinycssloaders, shinybusy[add_busy_bar],
   shiny[h2, h3, moduleServer, NS, tagList, fillPage, tags,
         sidebarLayout, sidebarPanel, mainPanel, dateRangeInput, fluidPage,
         fluidRow, column,sliderInput, absolutePanel, observe, observeEvent,
@@ -9,20 +11,14 @@ box::use(
 
 )
 
-cat("Loading data...\n", file = stderr())
-fire_nrt_V1_96617_df <- readr::read_csv('app/data/fire_nrt_V1_96617.csv') |> data.table::as.data.table()
-#fire_archive_V1_96617_df <- readr::read_csv('app/data/fire_archive_V1_96617.csv') |> data.table::as.data.table()
-fire_nrt_M6_96619_df <- readr::read_csv('app/data/fire_nrt_M6_96619.csv') |> data.table::as.data.table()
-#fire_archive_M6_96619_df <- readr::read_csv('app/data/fire_archive_M6_96619_mod.csv') |> data.table::as.data.table()
-selected_data <- reactiveValues(val = fire_nrt_V1_96617_df)
-cat("Loading data done.\n", file = stderr())
-
+options(spinner.color="#0275D8", spinner.color.background="#ffffff", spinner.size=2)
 
 #' @export
 ui <- function(id) {
   ns <- NS(id)
   tagList(
     div(
+      add_busy_bar(color = "#8a4af3"),
       class = 'h-container',
       h2( "Australia Fire Map"),
       p("NASA Satellite Data MODISC6 and VIIRS 375m from 2019-08-01 to 2020-01-11"),
@@ -31,8 +27,8 @@ ui <- function(id) {
     tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
     leaflet::leafletOutput(ns("mymap"), width = "100%", height = "100%"),
     absolutePanel(bottom = 60, right = 800,
-                  sliderInput(ns("slide-date-range"), "Year", min = min(fire_nrt_V1_96617_df$acq_date),
-                              max =  max(fire_nrt_V1_96617_df$acq_date),
+                  sliderInput(ns("slide-date-range"), "Year", min = as.Date("2019-10-01"),
+                              max =  as.Date("2020-01-11"),
                               value = c(as.Date("2019-10-01"), as.Date("2019-10-31")),
                               animate = animationOptions(interval = 1000, loop = FALSE)
                               ))
@@ -40,13 +36,11 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id) {
+server <- function(id, selected_data, fire_nrt_V1_96617_df, fire_nrt_M6_96619_df) {
   moduleServer(id, function(input, output, session) {
-
     filteredDateRange <- reactive({
       selected_data$val |>
-        dplyr::filter(dplyr::between(acq_date, input$"slide-date-range"[1],
-                                     input$"slide-date-range"[2]))
+        dplyr::filter(dplyr::between(acq_date, input$"slide-date-range"[1], input$"slide-date-range"[2]))
     })
 
     observe({
